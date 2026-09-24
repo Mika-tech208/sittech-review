@@ -20,6 +20,7 @@
     --dim: #4b565d;
     --ice: #8fb3c7;
 
+    --measure: 46ch;
     --step-0: 0.72rem;
     --step-1: 0.95rem;
     --step-2: clamp(1.9rem, 4.2vw, 3.1rem);
@@ -37,6 +38,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  a { color: var(--ice); }
+  a:focus-visible,
+  button:focus-visible { outline: 1px solid var(--ice); outline-offset: 2px; }
+
   .mono {
     font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
     font-size: var(--step-0);
@@ -45,9 +50,9 @@
   }
 
   .wrap {
-    max-width: 1080px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2.5rem) 4rem;
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2.5rem) 4rem;
     display: flex;
     flex-direction: column;
     gap: clamp(1.75rem, 3.5vw, 2.75rem);
@@ -99,20 +104,29 @@
     color: var(--text);
   }
   h1 span { color: var(--muted); }
-  .lede p { margin: 0; max-width: 46ch; }
+  .lede p { margin: 0; max-width: var(--measure); }
 
-  /* video */
-  .screen {
-    position: relative;
+  /* shared frame for anything showing a captured pixel */
+  .frame {
     background: #000;
     border: 1px solid var(--hairline);
     overflow: hidden;
   }
-  video {
+  video,
+  .plate img {
     display: block;
     width: 100%;
     aspect-ratio: 16 / 10;
     background: #000;
+  }
+
+  .filelink {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    align-items: baseline;
+    margin-top: -1rem;
+    color: var(--dim);
   }
 
   /* chapters — the four scroll states the sequence actually moves through */
@@ -140,13 +154,65 @@
   }
   .chapter:hover,
   .chapter:focus-visible { background: #111a20; }
-  .chapter:focus-visible { outline: 1px solid var(--ice); outline-offset: -1px; }
   .chapter .time {
     color: var(--ice);
     font-variant-numeric: tabular-nums;
   }
   .chapter .state { color: var(--text); font-weight: 500; }
   .chapter .what { font-size: 0.82rem; line-height: 1.45; color: var(--muted); }
+
+  /* section heads */
+  .sectionhead {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .sectionhead h2 {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .sectionhead p { margin: 0; max-width: var(--measure); }
+
+  /* scroll plates — one captured frame per scroll position */
+  .plates {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 4vw, 3.25rem);
+  }
+  .plate { margin: 0; display: flex; flex-direction: column; gap: 0.85rem; }
+  .plate figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem 1.1rem;
+  }
+  .pct {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+  .plate .state { color: var(--ice); }
+  .plate .note { color: var(--dim); font-size: 0.85rem; }
+  .plate .rule {
+    flex: 1 1 4rem;
+    height: 1px;
+    min-width: 2rem;
+    background: var(--hairline);
+  }
+  .plate a.shot {
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+  }
 
   /* spec strip */
   .specs {
@@ -183,12 +249,18 @@
     </p>
   </div>
 
-  <div class="screen">
+  <div class="frame">
     <video id="film" controls autoplay muted playsinline preload="auto" poster="poster.jpg">
       <source src="full-scroll.mp4" type="video/mp4">
       Seu navegador n&atilde;o reproduz este v&iacute;deo.
     </video>
   </div>
+
+  <p class="filelink mono">
+    <span>Arquivo direto</span>
+    <a href="full-scroll.mp4">full-scroll.mp4</a>
+    <span>MP4 H.264 &middot; 10,8 MB</span>
+  </p>
 
   <div class="chapters">
     <button class="chapter" data-at="0">
@@ -213,8 +285,96 @@
     </button>
   </div>
 
+  <div class="sectionhead">
+    <h2>Pontos de scroll</h2>
+    <p>
+      Seis quadros parados, capturados em 1440 &times; 900 nas posi&ccedil;&otilde;es
+      exatas do scroll. Clique em qualquer um para abrir o PNG original.
+    </p>
+  </div>
+
+  <div class="plates">
+    <figure class="plate" id="p00">
+      <figcaption>
+        <span class="pct">00%</span>
+        <span class="state mono">S0 &middot; Part / Solid</span>
+        <span class="rule"></span>
+        <span class="note">In&iacute;cio. Peça inteira sobre o hero.</span>
+      </figcaption>
+      <a class="shot frame" href="scroll-00.png">
+        <img src="scroll-00.png" width="1440" height="900" decoding="async"
+             alt="Hero da p&aacute;gina com a pe&ccedil;a usinada completa em metal.">
+      </a>
+    </figure>
+
+    <figure class="plate" id="p20">
+      <figcaption>
+        <span class="pct">20%</span>
+        <span class="state mono">S0 &middot; Part / Solid</span>
+        <span class="rule"></span>
+        <span class="note">A c&acirc;mera come&ccedil;a a entrar; o texto sai.</span>
+      </figcaption>
+      <a class="shot frame" href="scroll-20.png">
+        <img src="scroll-20.png" width="1440" height="900" loading="lazy" decoding="async"
+             alt="Pe&ccedil;a met&aacute;lica mais pr&oacute;xima, textos do hero desaparecendo.">
+      </a>
+    </figure>
+
+    <figure class="plate" id="p40">
+      <figcaption>
+        <span class="pct">40%</span>
+        <span class="state mono">S1 &middot; Inspection</span>
+        <span class="rule"></span>
+        <span class="note">Inspe&ccedil;&atilde;o t&eacute;cnica, giro discreto.</span>
+      </figcaption>
+      <a class="shot frame" href="scroll-40.png">
+        <img src="scroll-40.png" width="1440" height="900" loading="lazy" decoding="async"
+             alt="Vista de inspe&ccedil;&atilde;o da pe&ccedil;a, faces fresadas e furos vis&iacute;veis.">
+      </a>
+    </figure>
+
+    <figure class="plate" id="p60">
+      <figcaption>
+        <span class="pct">60%</span>
+        <span class="state mono">S2 &middot; Feature / Bore</span>
+        <span class="rule"></span>
+        <span class="note">Furo e ressalto em close; material ainda f&iacute;sico.</span>
+      </figcaption>
+      <a class="shot frame" href="scroll-60.png">
+        <img src="scroll-60.png" width="1440" height="900" loading="lazy" decoding="async"
+             alt="Close do furo e do ressalto com parafusos, alum&iacute;nio usinado.">
+      </a>
+    </figure>
+
+    <figure class="plate" id="p80">
+      <figcaption>
+        <span class="pct">80%</span>
+        <span class="state mono">S3 &middot; Geometry / CAD</span>
+        <span class="rule"></span>
+        <span class="note">Dissolu&ccedil;&atilde;o completa; s&oacute; a linework de pé.</span>
+      </figcaption>
+      <a class="shot frame" href="scroll-80.png">
+        <img src="scroll-80.png" width="1440" height="900" loading="lazy" decoding="async"
+             alt="Pe&ccedil;a convertida em wireframe CAD, com res&iacute;duos da dissolu&ccedil;&atilde;o.">
+      </a>
+    </figure>
+
+    <figure class="plate" id="p100">
+      <figcaption>
+        <span class="pct">100%</span>
+        <span class="state mono">S3 &middot; Geometry / CAD</span>
+        <span class="rule"></span>
+        <span class="note">Fim. C&acirc;mera recua e o texto entra.</span>
+      </figcaption>
+      <a class="shot frame" href="scroll-100.png">
+        <img src="scroll-100.png" width="1440" height="900" loading="lazy" decoding="async"
+             alt="Wireframe completo da pe&ccedil;a com o texto Every part starts as geometry.">
+      </a>
+    </figure>
+  </div>
+
   <div class="specs mono">
-    <span><b>0:36</b></span>
+    <span>V&iacute;deo <b>0:36</b></span>
     <span><b>1440 &times; 900</b></span>
     <span><b>30 fps</b></span>
     <span>WebGL <b>em tempo real</b></span>
@@ -223,7 +383,8 @@
 
   <footer>
     Grava&ccedil;&atilde;o da experi&ecirc;ncia rodando localmente &mdash; n&atilde;o
-    &eacute; o site publicado. Os bot&otilde;es acima pulam para cada estado do scroll.
+    &eacute; o site publicado. Os bot&otilde;es de capítulo pulam para cada estado
+    do scroll no v&iacute;deo.
   </footer>
 </div>
 
