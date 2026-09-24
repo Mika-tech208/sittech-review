@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<title>Sittech Fase 1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@300;400&display=swap">
+<style>
+  /* Committed to a single dark world on purpose: the piece being reviewed is
+     a near-black cinematic sequence, and a light ground would fight it.
+     Every colour is painted explicitly so the page holds on any host ground. */
+  :root {
+    --void: #04070a;
+    --surface: #0b1116;
+    --hairline: #1c252b;
+    --text: #eef2f4;
+    --muted: #7e8a91;
+    --dim: #4b565d;
+    --ice: #8fb3c7;
+
+    --step-0: 0.72rem;
+    --step-1: 0.95rem;
+    --step-2: clamp(1.9rem, 4.2vw, 3.1rem);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--muted);
+    font-family: "Inter Tight", system-ui, sans-serif;
+    font-size: var(--step-1);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    font-size: var(--step-0);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2.5rem) 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.75rem, 3.5vw, 2.75rem);
+  }
+
+  /* masthead */
+  .masthead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .wordmark {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.34em;
+    color: var(--text);
+  }
+  .masthead .mono { color: var(--dim); }
+
+  /* lede */
+  .lede { display: flex; flex-direction: column; gap: 1rem; }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--ice);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--ice);
+    flex: none;
+  }
+  h1 {
+    margin: 0;
+    font-size: var(--step-2);
+    font-weight: 600;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+    text-wrap: balance;
+    color: var(--text);
+  }
+  h1 span { color: var(--muted); }
+  .lede p { margin: 0; max-width: 46ch; }
+
+  /* video */
+  .screen {
+    position: relative;
+    background: #000;
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background: #000;
+  }
+
+  /* chapters — the four scroll states the sequence actually moves through */
+  .chapters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px;
+    background: var(--hairline);
+    border: 1px solid var(--hairline);
+  }
+  .chapter {
+    appearance: none;
+    border: 0;
+    margin: 0;
+    text-align: left;
+    background: var(--surface);
+    color: inherit;
+    font: inherit;
+    padding: 1rem 1.15rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    cursor: pointer;
+    transition: background 180ms ease;
+  }
+  .chapter:hover,
+  .chapter:focus-visible { background: #111a20; }
+  .chapter:focus-visible { outline: 1px solid var(--ice); outline-offset: -1px; }
+  .chapter .time {
+    color: var(--ice);
+    font-variant-numeric: tabular-nums;
+  }
+  .chapter .state { color: var(--text); font-weight: 500; }
+  .chapter .what { font-size: 0.82rem; line-height: 1.45; color: var(--muted); }
+
+  /* spec strip */
+  .specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--hairline);
+    color: var(--dim);
+  }
+  .specs b { color: var(--muted); font-weight: 400; }
+
+  footer { color: var(--dim); font-size: 0.85rem; max-width: 60ch; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chapter { transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <span class="wordmark">Sittech</span>
+    <span class="mono">Revis&atilde;o visual &middot; Fase 1</span>
+  </header>
+
+  <div class="lede">
+    <span class="eyebrow mono">Scroll cinematogr&aacute;fico</span>
+    <h1>From geometry<br><span>to reality.</span></h1>
+    <p>
+      Captura da experi&ecirc;ncia inicial rodando em tempo real: o scroll controla
+      a c&acirc;mera e a pe&ccedil;a, da liga usinada at&eacute; a leitura CAD.
+      36 segundos, sem &aacute;udio.
+    </p>
+  </div>
+
+  <div class="screen">
+    <video id="film" controls autoplay muted playsinline preload="auto" poster="poster.jpg">
+      <source src="full-scroll.mp4" type="video/mp4">
+      Seu navegador n&atilde;o reproduz este v&iacute;deo.
+    </video>
+  </div>
+
+  <div class="chapters">
+    <button class="chapter" data-at="0">
+      <span class="time mono">0:00 &middot; S0</span>
+      <span class="state mono">Part / Solid</span>
+      <span class="what">Pe&ccedil;a inteira, c&acirc;mera afastada, hero vis&iacute;vel.</span>
+    </button>
+    <button class="chapter" data-at="17">
+      <span class="time mono">0:17 &middot; S1</span>
+      <span class="state mono">Inspection</span>
+      <span class="what">Textos saem, c&acirc;mera entra, giro discreto.</span>
+    </button>
+    <button class="chapter" data-at="20">
+      <span class="time mono">0:20 &middot; S2</span>
+      <span class="state mono">Feature / Bore</span>
+      <span class="what">Furo e pocket de perto; o material come&ccedil;a a ceder.</span>
+    </button>
+    <button class="chapter" data-at="23">
+      <span class="time mono">0:23 &middot; S3</span>
+      <span class="state mono">Geometry / CAD</span>
+      <span class="what">A pe&ccedil;a vira linework t&eacute;cnico e o texto entra.</span>
+    </button>
+  </div>
+
+  <div class="specs mono">
+    <span><b>0:36</b></span>
+    <span><b>1440 &times; 900</b></span>
+    <span><b>30 fps</b></span>
+    <span>WebGL <b>em tempo real</b></span>
+    <span>Captura <b>Playwright</b></span>
+  </div>
+
+  <footer>
+    Grava&ccedil;&atilde;o da experi&ecirc;ncia rodando localmente &mdash; n&atilde;o
+    &eacute; o site publicado. Os bot&otilde;es acima pulam para cada estado do scroll.
+  </footer>
+</div>
+
+<script>
+  const film = document.getElementById("film");
+  for (const button of document.querySelectorAll(".chapter")) {
+    button.addEventListener("click", () => {
+      film.currentTime = Number(button.dataset.at);
+      film.play().catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
